@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--自定义error页面-->
+发生错误的时间: <span th:text="${#dates.format(timestamp,'yyyy-MM-dd')}"></span><br>
+错误状态码: <span th:text="${status}"></span><br>
+异常消息: <span th:text="${messages}"></span>
+</body>
+</html>

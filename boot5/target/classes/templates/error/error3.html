@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error Page</title>
+</head>
+<body>
+<h1>error3.html</h1>
+发生错误的时间: <span th:text="${#dates.format(timestamp,'yyyy-MM-dd HH:mm:ss')}"></span><br>
+错误状态码: <span th:text="${status}"></span><br>
+异常消息: <span th:text="${message}"></span>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+<script src="js/check.js"></script>
+
+    </script>
+</head>
+<body>
+
+<div th:object="${user}">
+
+
+    姓名：<span th:text="*{username}"></span><br>
+    密码：<span th:text="*{password}"></span><br>
+    头像：<img th:src="@{*{tuPian}}"><br>
+
+
+</div>
+</body>
+</html>

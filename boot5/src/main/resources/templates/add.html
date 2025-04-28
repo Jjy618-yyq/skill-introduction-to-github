@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>网上书店</title>
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<form action="/add">
+<table width="700" border="1" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="43%" height="26">书名</td>
+    <td><input type="text" name="title"></td>
+  </tr>
+  <tr>
+    <td width="17%">作者</td>
+    <td><input type="text" name="author"></td>
+  </tr>
+  <tr>
+    <td width="17%">出版社</td>
+    <td><input type="text" name="publisher"></td>
+  </tr>
+  <tr>
+    <td width="5%">价格</td>
+    <td><input type="text" name="price"></td>
+  </tr>
+  <tr>
+    <td width="9%">简介</td>
+    <td><input type="text" name="introduce"></td>
+  </tr>
+  <tr>
+    <td width="9%">出版时间</td>
+    <td><input type="date" name="publishDate"></td>
+  </tr>
+  <tr>
+    <td colspan="2"><input type="submit" value="添加">/td>
+  </tr>
+</table>
+</form>
+</body>
+</html>

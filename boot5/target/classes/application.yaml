@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/mybatis?useSSL=false&serverTimezone=UTC&characterEncoding=utf8
+    username: root
+    password: admin
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# MyBatis 配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml  # XML映射文件位置
+  type-aliases-package: it.boot5.model    # 实体类所在包
+  configuration:
+    map-underscore-to-camel-case: true      # 开启驼峰命名转换

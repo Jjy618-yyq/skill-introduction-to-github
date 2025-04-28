@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 注意：namespace 必须对应您的 BookMapper 接口全限定名 -->
+<mapper namespace="it.boot5.service.BookMapper">
+
+    <!-- 结果映射，对应您的 Book 模型类 -->
+    <resultMap id="bookResultMap" type="it.boot5.model.Book">
+<!--        <id property="id" column="id" />-->
+        <result property="title" column="title" />
+        <result property="author" column="author" />
+        <!-- 根据您的 Book 模型类添加其他字段 -->
+    </resultMap>
+
+    <!-- 查询所有书籍 -->
+    <select id="findAll" resultMap="bookResultMap">
+        SELECT * FROM books
+    </select>
+
+    <!-- 根据ID查询书籍 -->
+    <select id="findById" resultMap="bookResultMap" parameterType="Long">
+        SELECT * FROM books WHERE id = #{id}
+    </select>
+
+    <!-- 插入书籍 -->
+    <insert id="insert" parameterType="it.boot5.model.Book" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO books(title, author, price)
+        VALUES(#{title}, #{author}, #{price})
+    </insert>
+
+    <!-- 更新书籍 -->
+    <update id="update" parameterType="it.boot5.model.Book">
+        UPDATE books SET
+                         title = #{title},
+                         author = #{author},
+                         price = #{price}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除书籍 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM books WHERE id = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+<script src="js/check.js"></script>
+
+    </script>
+</head>
+<body>
+<table>
+    <tr>
+        <th>序号</th>
+        <th>文件</th>
+    </tr>
+
+    <!-- 使用Thymeleaf的th:each遍历filenames集合，每个元素命名为filename -->
+    <tr th:each="filename : ${filenames}">
+        <!-- 显示当前行序号（从1开始计数） -->
+        <td th:text="${filenameStat.count}"></td>
+
+        <!-- 定义一个临时变量tempFileName，值为：截取filename中第一个下划线后的内容 -->
+        <!-- 例如：假设filename是"12345_报告.pdf"，则tempFileName="报告.pdf" -->
+        <td th:with="tempFileName=${filename.substring(filename.indexOf('_')+1)}">
+            <!--
+                生成下载链接：
+                1. href指向/download/{name}，其中{name}会被替换为filename的值
+                2. 显示文本使用处理后的tempFileName（用户看到的文件名不带前缀）
+            -->
+            <a th:href="@{/download/{name}(name=${filename})}"
+               th:text="${tempFileName}"></a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+
+  <title>网上书店</title>
+  <link href="css/style.css" rel="stylesheet" type="text/css">
+  <script type="application/javascript" src="js/jquery-3.2.1.min.js"></script>
+  <script type="application/javascript">
+    $(function(){
+      var result = $("#result")
+      $.ajax({
+        url: "show2",
+        type: "get",
+        dataType:"json",
+        success:function(data){
+
+        var booklist = data.booklist;
+        var info = ""
+
+        for (var book of booklist) {
+          info += " <tr align='center'><td width='164'>"  +book.title +
+              " </td><td width='224'>" + book.author +
+              " </td><td width='304'>" + book.publisher +
+              " </td><td width='304'>" + book.price +
+              " </td><td width='304'> <img src = 'images/buy.gif'></td></tr>"
+        }
+        result.append(info)
+
+        }
+
+      })
+    })
+
+  </script>
+</head>
+<body>
+
+
+<div align="center" >
+  <!-- 头部份 -->
+  <span th:insert="head.html::header"></span>
+
+  <!-- 身体部分 -->
+  <br><a class="title" th:text="#{book.buyBook}"></a><br>
+  <table width="700" border="1" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="43%" height="26"><div align="center" th:text="#{book.bookname}"></div></td>
+      <td width="17%"><div align="center" th:text="#{book.author}"></div></td>
+      <td width="17%"><div align="center" th:text="#{book.publisher}"></div></td>
+      <td width="5%"><div align="center" th:text="#{book.price}"></div></td>
+      <td width="9%"><div align="center" th:text="#{book.operation}"></div></td>
+    </tr>
+    <tr th:each="book:${booklist}" align="center">
+      <td width="164"   th:text="${book.title}"></td>
+      <td width="224" th:text="${book.author}"></td>
+      <td width="304"  th:text="${book.publisher}"></td>
+      <td width="304"  th:text="${book.price}"></td>
+      <td width="304"  ><img src="images/buy.gif"></td>
+    </tr>
+    <tbody id="result"></tbody>
+  </table>
+  <p>&nbsp;</p>
+
+  <!--  底部-->
+  <br>
+  <span th:replace="foot.html"></span>
+
+
+</div>
+
+<table border="1">
+  <tr>
+    <th>序号</th>
+    <th>原始a标签</th>
+    <th>Thymleaf下的a标签</th>
+  </tr>
+
+  <tr>
+    <th>1、只发出请求，无参数</th>
+    <td><a href="/show1">链接(推荐)</a></td>
+    <td><a th:href="@{/show1}">链接(不推荐)</a></td>
+  </tr>
+
+  <tr>
+    <th>2、携带固定参数</th>
+    <td><a href="/show3?stuName=张三&stuAge=20">链接(推荐)</a></td>
+    <td><a th:href="@{/show3(stuName='张三',stuAge=20)}">链接(不推荐)</a></td>
+  </tr>
+
+  <tr>
+    <th>3、RESTFul格式下携带固定参数</th>
+    <td><a href="/show4/张三/20">链接(推荐)</a></td>
+    <td><a th:href="@{/show4/{name}/{age}(name='张三',age=20)}">链接(不推荐)</a></td>
+  </tr>
+  <tr>
+    <th>4、携带非固定参数</th>
+    <td>无法完成</td>
+    <td><a th:href="@{/show3(stuName=${myname},stuAge=${myage})}">链接(推荐)</a></td>
+  </tr>
+
+  <tr>
+    <th>5、RESTFul格式下携带非固定参数</th>
+    <td>无法完成</td>
+    <td><a th:href="@{/show4/{name}/{age}(name=${myname},age=${myage})}">链接(推荐)</a></td>
+  </tr>
+
+
+
+
+
+
+</table>
+
+</body>
+</html>

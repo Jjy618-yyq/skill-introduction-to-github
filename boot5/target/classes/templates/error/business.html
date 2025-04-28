@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Business Error</title>
+</head>
+<body>
+<h1>Business Error Page</h1>
+发生错误的时间: <span th:text="${#dates.format(timestamp,'yyyy-MM-dd HH:mm:ss')}"></span><br>
+业务错误码: <span th:text="${status}"></span><br>
+错误消息: <span th:text="${message}"></span>
+</body>
+</html>

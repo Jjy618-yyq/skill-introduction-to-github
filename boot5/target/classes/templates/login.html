@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+<script src="js/check.js"></script>
+    <script type="application/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="application/javascript">
+        /*传递json字符串，接收方：实体类来接受  添加增添和修改按钮在通过函数和controller上的注解调用service和model层进行修改和添加数据*/
+        /*
+   * 用户添加表单数据功能
+   * 通过AJAX发送POST请求，将表单数据以JSON格式提交到服务端
+   */
+        function addForm(){
+            // 获取表单输入值
+            var username = $("#userid").val(); // 用户名输入框的值
+            var password = $("#password").val(); // 密码输入框的值
+
+            // 构造请求数据对象（需与后端实体类字段对应）
+            var data = {
+                "username": username,
+                "password": password
+            };
+
+            // 发送AJAX请求
+            $.ajax({
+                url: "users",          // 请求地址（对应Controller的@RequestMapping路径）
+                type: "post",          // 请求方法类型（POST）
+                contentType: "application/json;charset=utf-8", // 设置请求头为JSON格式
+                data: JSON.stringify(data), // 将对象序列化为JSON字符串
+                dataType: "json",      // 预期返回数据类型为JSON
+                success: function(data) { // 请求成功回调
+                    // 弹窗显示服务端返回的flag标志（通常用于显示操作结果）
+                    alert(data.flag);
+
+                    // （建议）可在此处添加页面刷新或跳转逻辑
+                    // 例如：window.location.reload();
+                },
+                // （建议）可添加error回调处理异常情况
+                // error: function(xhr, status, error) {
+                //     console.error("请求失败:", error);
+                // }
+            });
+        }
+
+        /*传递json对象，接收方1：实体类来接受  2.基本数据类型*/
+
+        function updateForm(){
+            var username=$("#userid").val();
+            var password=$("#password").val();
+            var data={"username":username,"password":password}
+            $.ajax({
+                url:"users",
+                type:"put",
+                data:data,
+                dataType:"json",
+                success:function(data){
+                    alert(data.flag)
+
+                },
+                error:function(data){
+                    console.log(data)
+                   var msg="状态码:"+data.responseJSON.code+",错误消息:"+data.responseJSON.message;
+                    alert(msg)
+                }
+            })
+        }
+
+
+        function delForm(){
+            var username=$("#userid").val();
+            $.ajax({
+                url:"users/"+username,
+                type:"delete",
+                dataType:"json",
+                success:function(data){
+                    alert(data.flag)
+
+                }
+            })
+        }
+
+
+        function checkForm(){
+            var username=$("#userid").val();
+            var password=$("#password").val();
+            var data={"password":password}
+
+            $.ajax({
+                url:"users/"+username,
+                type:"get",
+                data:data,
+                dataType:"json",
+                success:function(data){
+                    if(data.flag){
+                        alert("登录成功")
+                        window.location="/show5"
+                    }else
+                        alert("登录失败")
+
+                }
+            })
+        }
+
+
+    </script>
+</head>
+<body>
+
+
+<!-- 显示color属性 -->
+<h2>颜色:</h2>
+<ol>
+    <li th:each="item : ${color}" th:text="${item.key + ': ' + item.value}"></li>
+</ol>
+
+
+
+<!-- 显示show14添加的体育成绩 -->
+<h2>体育成绩:</h2>
+<div th:if="${map != null}">
+    <ol>
+        <li th:each="item : ${map}" th:text="${item.key + ': ' + item.value}"></li>
+    </ol>
+</div>
+<div align="center"><br>
+    <a class="title">用户登录</a><br>
+</div>
+<form name="form1" method="post" action="/login">
+    <table width="398" height="215" border="1" align="center" cellpadding="0" cellspacing="0">
+        <tr>
+            <td width="394" height="213">
+                <table width="91%" height="80%" border="0" align="center" cellpadding="1" cellspacing="1">
+
+                    <tr>
+                        <td width="120" align="right">用户名：</td>
+                        <td width="208">
+                            <input name="userid" type="text" id="userid" size="15" maxlength="20">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="120" align="right">密码：</td>
+                        <td width="208">
+                            <input name="password" type="password" id="password" size="15" maxlength="20">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="120" height="23" align="right">&nbsp;</td>
+                        <td width="208">
+                            <div align="left">
+                                <!-- 表单操作按钮组 -->
+                                <div align="left">
+                                    <!-- 登录按钮：提交表单时会触发checkform()进行前端验证 -->
+                                    <input type="button" name="Submit" value="登录" onclick="checkForm()">
+
+                                    <!-- 添加按钮：通过AJAX POST请求执行用户添加操作 -->
+                                    <input type="button" name="Submit" value="添加" onclick="addForm()">
+
+                                    <!-- 修改按钮：通过AJAX PUT请求执行用户修改操作 -->
+                                    <input type="button" name="Submit" value="修改" onclick="updateForm()">
+                                    <input type="button" name="Submit" value="删除" onclick="delForm()">
+
+                                    <!-- 重填按钮：清空表单输入内容 -->
+                                    <input type="reset" name="reset" value="重填">
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div align="center"></div>
+                <div align="center"></div>
+                <div align="center"></div>
+                <div align="center"></div>
+            </td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

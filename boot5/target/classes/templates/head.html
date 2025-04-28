@@ -1,0 +1,22 @@
+<div th:fragment="header">
+    <table width="700" border="1" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC">
+        <tr>
+            <td width="111" height="87" align="center"><img src="images/logo.gif" width="91" height="72"><br>      </td>
+            <td width="509" align="center"><img src="images/banner.bmp" width="510" height="80"></td>
+            <td align="center" width="70">      <a href="admin/login.jsp" th:text="#{book.management}"></a></td>
+        </tr>
+    </table>
+
+    <table width="700" border="1" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC">
+        <tr>
+            <td width="164"><div align="center"><a href="index.jsp" th:text="#{book.firstPage}"></a></div></td>
+            <td width="224"><div align="center"><a href="booklist.jsp" th:text="#{book.buyBook}"></a></div></td>
+            <td width="304" align="right"><div align="center"><a href="shopcar.jsp" th:text="#{book.cart}"></a>      </div>        <div align="center"></div></td>
+            <td width="304" align="right"><div align="center"><a href="myshop.jsp" th:text="#{book.order}"></a></div></td>
+            <td width="304" align="right"><div align="center"  th:text="#{book.date}+ ${#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}    " >      </div></td>
+        </tr>
+
+
+
+    </table>
+</div>

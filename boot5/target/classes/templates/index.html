@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>变量表达式</h1>
+姓名:<span th:text="${stu.stuName}">请登录</span>
+<h1>选择表达式</h1>
+<div th:object="${stu}">
+    姓名:<span th:text="*{stuName}"></span><br>
+    年龄:<span th:text="*{stuAge}"></span>
+
+</div>
+<h1>方法</h1>
+<div th:object="${stu}">
+<!--    下面两种都可以表示单独的姓和名-->
+    姓:<span th:text="*{stuName.substring(0,1)}"></span><br>
+    名:<span th:text="*{stuName.substring(1)}"></span><br>
+
+    姓:<span th:text="*{#strings.substring(stuName,0,1)}"></span><br>
+    名:<span th:text="*{#strings.substring(stuName,1)}"></span>
+
+</div>
+<!--这是特定的表达方式，也可以有其他表达方式比如时间的24进制-->
+日期<span th:text="*{#calendars.format(#calendars.createNow(),'yyyy-MM-dd')}"></span><br>
+时间<span th:text="*{#dates.format(#dates.createNow(),'hh:mm:ss')}"></span>
+
+<h1>字面值和拼接</h1>
+<span th:text="你好"}></span><br>
+<span th:text="'你好:'+${stu.stuName}"></span><br>
+<span th:text="|你好: ${stu.stuName}|"></span><br>
+
+
+<h1>运算</h1>
+今年年龄：<span th:text="${stu.stuAge}"></span><br>
+十年之后：<span th:text="${stu.stuAge}+10"></span><br>
+是否成年：<span th:text="${stu.stuAge}>18"></span><br>
+三元运算符：<span th:text="${stu.stuAge}>18?成年人:未成年"></span><br>
+默认值性别：<span th:text="${sex}?:女生"></span>
+<h1>循环和switch</h1>
+<table border="1" th:object="${stu}">
+    <tr>
+        <th>姓名</th>
+        <td th:text="*{stuName}"></td>
+    </tr>
+
+    <tr>
+        <th>爱好</th>
+
+        <td>
+
+            <table>
+                <tr th:each="item:*{stuHobby}">
+
+                    <td th:text="${itemStat.count} + '、'+${item}"></td>
+                </tr>
+
+            </table>
+        </td>
+
+    </tr>
+
+    <!--模拟if...else-->
+    <tr>
+        <th>成绩单</th>
+
+        <td>
+            <table>
+                <tr th:each="itema:*{stucJ}">
+                    <td th:if="${itema.value} >= 60"  th:text="${itemaStat.count}+'、'+${itema.key}+':'+${itema.value}+':考试通过'"></td>
+                    <td th:unless="${itema.value} >= 60"  th:text="${itemaStat.count}+'、'+${itema.key}+':'+${itema.value}+':考试不通过'"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <!--switch-->
+    <tr>
+        <th>选课结果</th>
+
+        <td>
+            <table>
+               <tr th:each="item:${kcSet}">
+                   <td th:switch="${#sets.contains(stu.stukC,item)}">
+               <input th:case="true" type="radio" checked th:text="${item}">
+               <input th:case="false" type="radio" disabled th:text="${item}">
+
+                   </td>
+
+               </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
